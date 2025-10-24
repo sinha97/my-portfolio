@@ -183,7 +183,9 @@ function App() {
     () => [
       "JavaScript (ES202x)",
       "TypeScript",
-      "React & React Native",
+      "React.js",
+      "React Native",
+      "Redux & Zustand",
       "Next.js",
       "Tailwind CSS",
       "Node.js",
@@ -246,12 +248,38 @@ function App() {
               </a>
             ))}
             {/* 3-way Theme toggle */}
-            <ThemeToggle theme={theme} setTheme={setTheme} />
+            <Button
+              as="button"
+              onClick={() => setTheme(isDark ? "light" : "dark")}
+              aria-label={isDark ? "Switch to light" : "Switch to dark"}
+            >
+              {isDark ? (
+                <Sun className="size-4" />
+              ) : (
+                <Moon className="size-4" />
+              )}
+              <span className="hidden sm:inline">
+                {isDark ? "Light" : "Dark"}
+              </span>
+            </Button>
           </nav>
 
           {/* Mobile actions */}
           <div className="flex md:hidden items-center gap-2">
-            <ThemeToggle theme={theme} setTheme={setTheme} />
+            <Button
+              as="button"
+              onClick={() => setTheme(isDark ? "light" : "dark")}
+              aria-label={isDark ? "Switch to light" : "Switch to dark"}
+            >
+              {isDark ? (
+                <Sun className="size-4" />
+              ) : (
+                <Moon className="size-4" />
+              )}
+              <span className="hidden sm:inline">
+                {isDark ? "Light" : "Dark"}
+              </span>
+            </Button>
             <Button
               as="button"
               onClick={() => setOpen((v) => !v)}
