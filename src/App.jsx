@@ -208,7 +208,7 @@ function App() {
                 Building delightful web & mobile UIs
               </h1>
               <p className="mt-4 text-base md:text-lg text-slate-600">
-                I’m a frontend engineer (4+ years) specializing in React,
+                I’m a frontend engineer (5+ years) specializing in React,
                 Next.js, and React Native. I love crafting clean, accessible
                 interfaces that scale.
               </p>
@@ -268,11 +268,11 @@ function App() {
                 </div>
                 <div className="mt-6 grid grid-cols-2 gap-3 text-sm">
                   <div className="rounded-xl border border-slate-200 p-3">
-                    <div className="font-semibold">4+ years</div>
+                    <div className="font-semibold">5+ years</div>
                     <div className="text-slate-600">Experience</div>
                   </div>
                   <div className="rounded-xl border border-slate-200 p-3">
-                    <div className="font-semibold">React · RN · TS</div>
+                    <div className="font-semibold">React · React-Native · TS</div>
                     <div className="text-slate-600">Core stack</div>
                   </div>
                 </div>
