@@ -433,7 +433,7 @@ function App() {
       </Section>
 
       {/* GitHub Activity */}
-      <Section
+      {/* <Section
         id="github"
         title="GitHub"
         subtitle="Latest repositories (auto-fetched)"
@@ -507,7 +507,7 @@ function App() {
             <Github className="size-4" /> See all repositories
           </Button>
         </div>
-      </Section>
+      </Section> */}
 
       {/* LeetCode */}
       <Section id="leetcode" title="LeetCode" subtitle="DSA practice & streaks">
