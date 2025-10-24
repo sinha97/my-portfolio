@@ -66,7 +66,7 @@ function App() {
   );
 
   // Reusable button with subtle lift
-  const Button = ({ className = "", children, ...props }) => (
+  const Button = ({ as: Component = "a", className = "", children, ...props }) => (
     <Component
       className={`group relative inline-flex items-center gap-2 rounded-2xl border border-slate-200 bg-white/90 backdrop-blur px-5 py-2.5 text-sm font-semibold shadow-sm transition hover:shadow-md hover:-translate-y-0.5 ${className}`}
       {...props}
