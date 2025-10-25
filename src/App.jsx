@@ -19,7 +19,7 @@ import "./App.css";
 import { highlightProjects, navItems } from "./constant";
 import { Section } from "./components/section";
 
-  function useProjects(jsonUrl) {
+function useProjects(jsonUrl) {
   const [projects, setProjects] = useState(highlightProjects);
   const [error, setError] = useState("");
 
@@ -51,7 +51,9 @@ function App() {
   const LEETCODE_URL = "https://leetcode.com/u/vk9633698/";
   const LINKEDIN_PROJECTS_JSON = "";
 
-    const { projects, error: projectsError } = useProjects(LINKEDIN_PROJECTS_JSON);
+  const { projects, error: projectsError } = useProjects(
+    LINKEDIN_PROJECTS_JSON
+  );
 
   const Badge = ({ children }) => (
     <span className="inline-flex items-center rounded-full border border-slate-200 bg-white/90 backdrop-blur px-3 py-1 text-sm leading-6 shadow-sm">
@@ -66,7 +68,12 @@ function App() {
   );
 
   // Reusable button with subtle lift
-  const Button = ({ as: Component = "a", className = "", children, ...props }) => (
+  const Button = ({
+    as: Component = "a",
+    className = "",
+    children,
+    ...props
+  }) => (
     <Component
       className={`group relative inline-flex items-center gap-2 rounded-2xl border border-slate-200 bg-white/90 backdrop-blur px-5 py-2.5 text-sm font-semibold shadow-sm transition hover:shadow-md hover:-translate-y-0.5 ${className}`}
       {...props}
@@ -100,18 +107,27 @@ function App() {
       "Tailwind CSS",
       "Node.js",
       "Express",
+      "Context API",
       "MongoDB",
       "PostgreSQL",
+      "SQL",
+      "Redux",
+      "Thunk/Saga",
       "REST & GraphQL",
       "Webpack/Vite",
       "Jest/RTL",
       "CI/CD",
       "Git & GitHub",
+      "Bootstrap",
+      "Figma",
+      "Agile & Scrum",
+      // "MUI",
+      "Chakra UI",
+      "Storybook",
+      // "AWS Basics",
     ],
     []
   );
-
-
 
   const [open, setOpen] = useState(false);
 
@@ -234,14 +250,14 @@ function App() {
                   <Mail className="size-4" /> Contact Me
                 </Button>
               </div>
-              <div className="mt-6 flex flex-wrap gap-2 text-sm text-slate-600">
+              {/* <div className="mt-6 flex flex-wrap gap-2 text-sm text-slate-600">
                 <Chip>React</Chip>
                 <Chip>Next.js</Chip>
                 <Chip>TypeScript</Chip>
                 <Chip>React Native</Chip>
                 <Chip>Tailwind CSS</Chip>
                 <Chip>Node.js</Chip>
-              </div>
+              </div> */}
             </div>
             {/* Profile card with glass look */}
             <motion.div
@@ -272,7 +288,9 @@ function App() {
                     <div className="text-slate-600">Experience</div>
                   </div>
                   <div className="rounded-xl border border-slate-200 p-3">
-                    <div className="font-semibold">React · React-Native · TS</div>
+                    <div className="font-semibold">
+                      React · React-Native · TS
+                    </div>
                     <div className="text-slate-600">Core stack</div>
                   </div>
                 </div>
@@ -287,10 +305,14 @@ function App() {
         <Card>
           <CardBody>
             <p className="text-base leading-relaxed">
-              I’m a core frontend developer with experience shipping consumer
-              apps at scale — from car rental platforms to ecommerce experiences
-              and creator apps. I focus on performance, accessibility, and DX,
-              and I enjoy building design systems that teams love using.
+              Senior Frontend Engineer with 5+ years of experience building
+              high-performance, scalable, and user-focused web applications
+              using React.js, JavaScript, and TypeScript. Strong expertise in
+              browser rendering, perfor- mance optimization, reusable UI
+              systems, and end-to-end feature ownership. Proven track record
+              collaborating with Product, UX, and Backend to deliver seamless
+              experiences at scale with clean code, CI/CD, testing, and
+              operational excellence.
             </p>
           </CardBody>
         </Card>
@@ -411,9 +433,7 @@ function App() {
                 </div>
                 <div>
                   <div className="font-semibold">Email</div>
-                  <p className="text-sm text-slate-600">
-                    Send me an email — I’m quick to respond.
-                  </p>
+                  <p className="text-sm text-slate-600">Send me an email</p>
                   <div className="mt-3">
                     <Button href="mailto:hello.viveksinha97@gmail.com">
                       Write an email

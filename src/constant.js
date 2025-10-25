@@ -1,31 +1,43 @@
-  export const highlightProjects = [
-    // {
-    //   title: "Short Film Reels – Local Creator Platform",
-    //   desc: "Mobile-first React Native app for 60s videos with voting, follows, comments, and monthly competitions.",
-    //   stack: [
-    //     "React Native",
-    //     "Firebase Auth",
-    //     "Golang backend (planned)",
-    //     "AWS",
-    //   ],
-    // },
-    {
-      title: "Car Rental Platform",
-      desc: "Search, filter, booking flows, and responsive UI. Improved conversion with faster search and clean UX.",
-      stack: ["React", "Node", "MongoDB", "Tailwind"],
-    },
-    {
-      title: "E-commerce Experience Platform",
-      desc: "Product listing, cart, checkout, and analytics-ready components at scale.",
-      stack: ["Next.js", "TypeScript", "PostgreSQL", "Redis"],
-    },
-  ];
+export const highlightProjects = [
+  {
+    title: "ChatGPT Clone",
+    desc: "A fully functional ChatGPT-like interface with authentication, AI responses, and chat history storage.",
+    stack: ["Next.js", "OpenAI", "Firebase", "Tailwind"],
+    // link: "https://www.linkedin.com/in/vivek-kumar-sinha97/",
+    repo: "https://github.com/sinha97/chatgpt-clone",
+    demo: "https://mychatgpt-gules.vercel.app/"
+  },
+  {
+    "title": "Twitter Clone",
+    "desc": "A full-featured Twitter-like web application with real-time updates, authentication, posting, and social interactions.",
+    "stack": ["Node.js", "Pug", "Express", "MongoDB", "Socket.io"],
+    // "link": "https://www.linkedin.com/in/vivek-kumar-sinha97/",
+    "repo": "https://github.com/sinha97/twitter-clone",
+    "demo": ""
+  },
+  {
+    "title": "Shopping Cart",
+    "desc": "A complete e-commerce shopping cart system with APIs, authentication, state management, and secure Stripe payments.",
+    "stack": ["React.js", "Bootstrap", "Node.js", "Express", "MongoDB","Stripe"],
+    // "link": "https://www.linkedin.com/in/vivek-kumar-sinha97/",
+    "repo": "https://github.com/sinha97/myShoppingCart",
+    "demo": ""
+  },
+  {
+    "title": "DevConnector",
+    "desc": "A social platform for developers with authentication, profiles, GitHub repo linking, and post/feed features. Built with a full MERN stack and Redux for global state.",
+    "stack": ["React.js", "Bootstrap", "Node.js", "Express", "MongoDB", "bcryptjs", "Redux-Thunk"],
+    // "link": "https://www.linkedin.com/in/vivek-kumar-sinha97/",
+    "repo": "https://github.com/sinha97/DevConnector",
+    "demo": ""
+  }
+];
 
-  export const navItems = [
-    { id: "home", label: "Home" },
-    { id: "about", label: "About" },
-    { id: "skills", label: "Skills" },
-    { id: "projects", label: "Projects" },
-    // { id: "github", label: "GitHub" },
-    { id: "contact", label: "Contact" },
-  ];
+export const navItems = [
+  { id: "home", label: "Home" },
+  { id: "about", label: "About" },
+  { id: "skills", label: "Skills" },
+  { id: "projects", label: "Projects" },
+  // { id: "github", label: "GitHub" },
+  { id: "contact", label: "Contact" },
+];
