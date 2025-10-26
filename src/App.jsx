@@ -14,9 +14,12 @@ import {
   Moon,
   Laptop,
   Sparkles,
+    Briefcase,
+  Calendar,
+  MapPin
 } from "lucide-react";
 import "./App.css";
-import { highlightProjects, navItems } from "./constant";
+import { experiences, highlightProjects, navItems } from "./constant";
 import { Section } from "./components/section";
 
 function useProjects(jsonUrl) {
@@ -316,6 +319,69 @@ function App() {
             </p>
           </CardBody>
         </Card>
+      </Section>
+
+      <Section
+        id="experience"
+        title="Experience"
+        subtitle="Work & contributions"
+      >
+        <div className="grid gap-6 md:grid-cols-2">
+          {experiences.map((exp, idx) => (
+            <Card key={idx}>
+              <CardBody>
+                <div className="flex items-start gap-3">
+                  <div className="rounded-xl bg-slate-100 p-2">
+                    <Briefcase className="size-5" />
+                  </div>
+                  <div className="flex-1">
+                    <div className="flex flex-wrap items-center gap-2">
+                      <h3 className="text-lg font-semibold">{exp.role}</h3>
+                      <span className="text-slate-500">•</span>
+                      <span className="font-medium">{exp.company}</span>
+                    </div>
+                    <div className="mt-1 flex flex-wrap items-center gap-4 text-xs text-slate-600">
+                      {exp.period && (
+                        <span className="inline-flex items-center gap-1">
+                          <Calendar className="size-4" />
+                          {exp.period}
+                        </span>
+                      )}
+                      {exp.location && (
+                        <span className="inline-flex items-center gap-1">
+                          <MapPin className="size-4" />
+                          {exp.location}
+                        </span>
+                      )}
+                    </div>
+                    {/* {Array.isArray(exp.bullets) && exp.bullets.length > 0 && (
+                      <ul className="mt-3 list-disc pl-5 text-sm text-slate-700 space-y-1">
+                        {exp.bullets.map((b, i) => (
+                          <li key={i}>{b}</li>
+                        ))}
+                      </ul>
+                    )} */}
+                    {/* {exp.links && exp.links.length > 0 && (
+                      <div className="mt-4 flex flex-wrap gap-2 text-xs">
+                        {exp.links.map((l, i) => (
+                          <Button
+                            key={i}
+                            href={l.href}
+                            target="_blank"
+                            rel="noreferrer"
+                            className="px-3 py-2"
+                          >
+                            <ExternalLink className="size-4" /> {l.label}
+                          </Button>
+                        ))}
+                      </div>
+                    )} */}
+                  </div>
+                </div>
+              </CardBody>
+            </Card>
+          ))}
+        </div>
       </Section>
 
       {/* Skills */}

@@ -41,3 +41,24 @@ export const navItems = [
   // { id: "github", label: "GitHub" },
   { id: "contact", label: "Contact" },
 ];
+
+export const experiences = [
+    {
+      role: "Software Engineer",
+      company: `Satin CreditCare Network Ltd`,
+      period: "08-2024 - Ongoing",
+      location: "Guragon, India",
+    },
+    {
+      role: "Software Developer",
+      company: `Kai-T`,
+      period: "04-2023 - 07-2024",
+      location: "Guragon, India",
+    },
+    {
+      role: "Software Developer",
+      company: `Opensense Pvt Ltd`,
+      period: "07-2021 - 01-2023",
+      location: "New Delhi, India",
+    },
+  ];
