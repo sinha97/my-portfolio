@@ -2,7 +2,7 @@ import React from "react";
 import { motion } from "framer-motion";
 
 export const Section = ({ id, title, subtitle, children }) => (
-  <section id={id} className="scroll-mt-20 py-18 md:py-12">
+  <section id={id} className="scroll-mt-10 py-6 md:py-12">
     <div className="mx-auto max-w-6xl px-4">
       <motion.h2
         initial={{ opacity: 0, y: 16 }}

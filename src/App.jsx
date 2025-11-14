@@ -14,9 +14,10 @@ import {
   Moon,
   Laptop,
   Sparkles,
-    Briefcase,
+  Briefcase,
   Calendar,
-  MapPin
+  MapPin,
+  Download,
 } from "lucide-react";
 import "./App.css";
 import { experiences, highlightProjects, navItems } from "./constant";
@@ -89,7 +90,7 @@ function App() {
   // Card with soft glass look
   const Card = ({ children, className = "" }) => (
     <div
-      className={`rounded-2xl border border-slate-200 bg-white/90 backdrop-blur text-slate-900 shadow ${className}`}
+      className={`rounded-2xl border border-slate-200 bg-white/90 backdrop-blur text-slate-900 shadow transform transition-all duration-300 hover:shadow-xl hover:-translate-y-1 ${className}`}
     >
       {children}
     </div>
@@ -162,7 +163,7 @@ function App() {
                 Vivek Kumar Sinha
               </div>
               <div className="text-xs text-slate-600 hidden sm:block">
-                Frontend Engineer · React / RN
+                Frontend-Heavy Fullstack · React/Next.js · Node/DB
               </div>
             </div>
           </a>
@@ -224,14 +225,21 @@ function App() {
                 <Sparkles className="mr-1 size-4" /> Open to opportunities
               </Badge>
               <h1 className="mt-4 text-4xl md:text-6xl font-extrabold tracking-tight leading-tight">
-                Building delightful web & mobile UIs
+                Building delightful web apps & scalable services
               </h1>
               <p className="mt-4 text-base md:text-lg text-slate-600">
-                I’m a frontend engineer (5+ years) specializing in React,
-                Next.js, and React Native. I love crafting clean, accessible
-                interfaces that scale.
+                I’m a frontend-heavy fullstack engineer (5+ years) building
+                across React/Next.js, Node.js, and modern databases. I love
+                crafting clean, accessible interfaces that scale.
               </p>
               <div className="mt-6 flex flex-wrap items-center gap-3">
+                <Button
+                  href="/Vivek_KumarResume.pdf"
+                  download
+                  className="bg-gradient-to-r from-indigo-500 to-fuchsia-500 text-white border-0"
+                >
+                  <Download className="size-4" /> Resume
+                </Button>
                 <Button
                   href={`https://github.com/${GITHUB_USERNAME}`}
                   target="_blank"
@@ -276,7 +284,7 @@ function App() {
                   <div>
                     <h3 className="text-xl font-bold">Vivek Kumar Sinha</h3>
                     <p className="text-slate-600">
-                      Frontend Engineer · React / Next.js / RN
+                      Frontend-Heavy Fullstack · React/Next.js/RN · Node/DB
                     </p>
                     <div className="mt-2 flex flex-wrap gap-2 text-xs">
                       <Chip>India (IST)</Chip>
@@ -292,7 +300,7 @@ function App() {
                   </div>
                   <div className="rounded-xl border border-slate-200 p-3">
                     <div className="font-semibold">
-                      React · React-Native · TS
+                      React · React-Native · TS · Node · Next.js
                     </div>
                     <div className="text-slate-600">Core stack</div>
                   </div>
@@ -308,14 +316,10 @@ function App() {
         <Card>
           <CardBody>
             <p className="text-base leading-relaxed">
-              Senior Frontend Engineer with 5+ years of experience building
-              high-performance, scalable, and user-focused web applications
-              using React.js, JavaScript, and TypeScript. Strong expertise in
-              browser rendering, perfor- mance optimization, reusable UI
-              systems, and end-to-end feature ownership. Proven track record
-              collaborating with Product, UX, and Backend to deliver seamless
-              experiences at scale with clean code, CI/CD, testing, and
-              operational excellence.
+              I’m a core frontend developer with experience shipping consumer
+              apps at scale — from car rental platforms to ecommerce experiences
+              and creator apps. I focus on performance, accessibility, and DX,
+              and I enjoy building design systems that teams love using.
             </p>
           </CardBody>
         </Card>
@@ -489,7 +493,7 @@ function App() {
       </Section>
 
       {/* Contact */}
-      <Section id="contact" title="Contact" subtitle="Let’s collaborate">
+      {/* <Section id="contact" title="Contact" subtitle="Let’s collaborate">
         <div className="grid gap-6 md:grid-cols-3">
           <Card>
             <CardBody>
@@ -558,7 +562,7 @@ function App() {
             </CardBody>
           </Card>
         </div>
-      </Section>
+      </Section> */}
 
       {/* Footer */}
       <footer className="border-t border-slate-200">
