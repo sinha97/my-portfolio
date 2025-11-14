@@ -254,12 +254,12 @@ function App() {
                   <Trophy className="size-4" /> LeetCode
                 </Button>
                 {/* Primary CTA */}
-                <Button
+                {/* <Button
                   href="#contact"
                   className="bg-gradient-to-r from-indigo-500 to-fuchsia-500 text-white border-0"
                 >
                   <Mail className="size-4" /> Contact Me
-                </Button>
+                </Button> */}
               </div>
               {/* <div className="mt-6 flex flex-wrap gap-2 text-sm text-slate-600">
                 <Chip>React</Chip>
