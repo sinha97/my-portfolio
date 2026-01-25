@@ -1,10 +1,17 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 
+import { scaleIn } from '../utils/animations';
+
 export const Badge = ({ children }) => (
-    <span className="inline-flex items-center rounded-full border border-slate-200 bg-white/90 backdrop-blur px-3 py-1 text-sm leading-6 shadow-sm dark:border-white/10 dark:bg-slate-900/90 dark:text-slate-200 dark:hover:border-indigo-500/50 transition-colors duration-300">
+    <motion.span
+        initial="hidden"
+        animate="visible"
+        variants={scaleIn}
+        className="inline-flex items-center rounded-full border border-slate-200 bg-white/90 backdrop-blur px-3 py-1 text-sm leading-6 shadow-sm dark:border-white/10 dark:bg-slate-900/90 dark:text-slate-200 dark:hover:border-indigo-500/50 transition-colors duration-300"
+    >
         {children}
-    </span>
+    </motion.span>
 );
 
 export const Chip = ({ children }) => (
@@ -30,11 +37,8 @@ export const Button = ({
 
 export const Card = ({ children, className = "" }) => (
     <motion.div
-        variants={{
-            hidden: { opacity: 0, y: 20 },
-            visible: { opacity: 1, y: 0, transition: { duration: 0.5 } }
-        }}
-        className={`rounded-2xl border border-slate-200 bg-white/90 backdrop-blur text-slate-900 shadow transform transition-all duration-300 hover:shadow-2xl hover:-translate-y-1 hover:border-indigo-300/50 dark:border-white/10 dark:bg-slate-950/80 dark:text-slate-100 dark:hover:border-indigo-500/30 ${className}`}
+        whileHover={{ y: -5, transition: { duration: 0.2 } }}
+        className={`rounded-2xl border border-slate-200 bg-white/90 backdrop-blur text-slate-900 shadow transform transition-all duration-300 hover:shadow-2xl hover:border-indigo-300/50 dark:border-white/10 dark:bg-slate-950/80 dark:text-slate-100 dark:hover:border-indigo-500/30 ${className}`}
     >
         {children}
     </motion.div>

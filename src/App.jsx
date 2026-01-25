@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 import { motion } from "framer-motion";
+import { fadeInUp, staggerContainer, slideInLeft } from "./utils/animations";
 import {
   Github,
   Linkedin,
@@ -200,18 +201,37 @@ function App() {
         <div className="mx-auto max-w-6xl px-4">
           <div className="grid items-center gap-10 py-16 md:grid-cols-2 md:py-24">
             <div>
-              <Badge>
-                <Sparkles className="mr-1 size-4" /> Open to opportunities
-              </Badge>
-              <h1 className="mt-4 text-4xl md:text-6xl font-extrabold tracking-tight leading-tight">
+              <motion.div initial="hidden" animate="visible" variants={fadeInUp}>
+                <Badge>
+                  <Sparkles className="mr-1 size-4" /> Open to opportunities
+                </Badge>
+              </motion.div>
+              <motion.h1
+                initial="hidden"
+                animate="visible"
+                variants={fadeInUp}
+                className="mt-4 text-4xl md:text-6xl font-extrabold tracking-tight leading-tight"
+              >
                 Building <span className="bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 bg-clip-text text-transparent">delightful web apps</span> & scalable services
-              </h1>
-              <p className="mt-4 text-base md:text-lg text-slate-600 dark:text-slate-400">
+              </motion.h1>
+              <motion.p
+                initial="hidden"
+                animate="visible"
+                variants={fadeInUp}
+                transition={{ delay: 0.1 }}
+                className="mt-4 text-base md:text-lg text-slate-600 dark:text-slate-400"
+              >
                 I’m a frontend-heavy fullstack engineer (5+ years) building
                 across React/Next.js, Node.js, and modern databases. I love
                 crafting clean, accessible interfaces that scale.
-              </p>
-              <div className="mt-6 flex flex-wrap items-center gap-3">
+              </motion.p>
+              <motion.div
+                initial="hidden"
+                animate="visible"
+                variants={fadeInUp}
+                transition={{ delay: 0.2 }}
+                className="mt-6 flex flex-wrap items-center gap-3"
+              >
                 <Button
                   href="/Vivek_KumarResume.pdf"
                   download
@@ -232,7 +252,7 @@ function App() {
                 <Button href={LEETCODE_URL} target="_blank" rel="noreferrer">
                   <Trophy className="size-4" /> LeetCode
                 </Button>
-              </div>
+              </motion.div>
             </div>
             {/* Profile card with glass look */}
             <motion.div
@@ -277,16 +297,23 @@ function App() {
 
       {/* About */}
       <Section id="about" title="About" subtitle="A quick intro">
-        <Card>
-          <CardBody>
-            <p className="text-base leading-relaxed">
-              I’m a core frontend developer with experience shipping consumer
-              apps at scale — from car rental platforms to ecommerce experiences
-              and creator apps. I focus on performance, accessibility, and DX,
-              and I enjoy building design systems that teams love using.
-            </p>
-          </CardBody>
-        </Card>
+        <motion.div
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true }}
+          variants={fadeInUp}
+        >
+          <Card>
+            <CardBody>
+              <p className="text-base leading-relaxed">
+                I’m a core frontend developer with experience shipping consumer
+                apps at scale — from car rental platforms to ecommerce experiences
+                and creator apps. I focus on performance, accessibility, and DX,
+                and I enjoy building design systems that teams love using.
+              </p>
+            </CardBody>
+          </Card>
+        </motion.div>
       </Section>
 
       <Section
@@ -294,54 +321,69 @@ function App() {
         title="Experience"
         subtitle="Work & contributions"
       >
-        <div className="grid gap-6 md:grid-cols-2">
+        <motion.div
+          className="grid gap-6 md:grid-cols-2"
+          variants={staggerContainer}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true }}
+        >
           {experiences.map((exp, idx) => (
-            <Card key={idx}>
-              <CardBody>
-                <div className="flex items-start gap-3">
-                  <div className="rounded-xl bg-slate-100 p-2 dark:bg-slate-800">
-                    <Briefcase className="size-5" />
-                  </div>
-                  <div className="flex-1">
-                    <div className="flex flex-wrap items-center gap-2">
-                      <h3 className="text-lg font-semibold">{exp.role}</h3>
-                      <span className="text-slate-500">•</span>
-                      <span className="font-medium">{exp.company}</span>
+            <motion.div key={idx} variants={fadeInUp}>
+              <Card>
+                <CardBody>
+                  <div className="flex items-start gap-3">
+                    <div className="rounded-xl bg-slate-100 p-2 dark:bg-slate-800">
+                      <Briefcase className="size-5" />
                     </div>
-                    <div className="mt-1 flex flex-wrap items-center gap-4 text-xs text-slate-600 dark:text-slate-400">
-                      {exp.period && (
-                        <span className="inline-flex items-center gap-1">
-                          <Calendar className="size-4" />
-                          {exp.period}
-                        </span>
-                      )}
-                      {exp.location && (
-                        <span className="inline-flex items-center gap-1">
-                          <MapPin className="size-4" />
-                          {exp.location}
-                        </span>
-                      )}
+                    <div className="flex-1">
+                      <div className="flex flex-wrap items-center gap-2">
+                        <h3 className="text-lg font-semibold">{exp.role}</h3>
+                        <span className="text-slate-500">•</span>
+                        <span className="font-medium">{exp.company}</span>
+                      </div>
+                      <div className="mt-1 flex flex-wrap items-center gap-4 text-xs text-slate-600 dark:text-slate-400">
+                        {exp.period && (
+                          <span className="inline-flex items-center gap-1">
+                            <Calendar className="size-4" />
+                            {exp.period}
+                          </span>
+                        )}
+                        {exp.location && (
+                          <span className="inline-flex items-center gap-1">
+                            <MapPin className="size-4" />
+                            {exp.location}
+                          </span>
+                        )}
+                      </div>
                     </div>
                   </div>
-                </div>
-              </CardBody>
-            </Card>
+                </CardBody>
+              </Card>
+            </motion.div>
           ))}
-        </div>
+        </motion.div>
       </Section>
 
       {/* Skills */}
       <Section id="skills" title="Skills" subtitle="Tools I use daily">
-        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-3">
+        <motion.div
+          className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-3"
+          variants={staggerContainer}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true }}
+        >
           {skills.map((s) => (
-            <div
+            <motion.div
               key={s}
+              variants={fadeInUp}
               className="rounded-xl border border-slate-200 bg-white/90 backdrop-blur p-3 text-sm font-medium shadow-sm dark:border-slate-800 dark:bg-slate-900/90 dark:text-slate-200"
             >
               {s}
-            </div>
+            </motion.div>
           ))}
-        </div>
+        </motion.div>
       </Section>
 
       {/* Projects */}
@@ -353,64 +395,72 @@ function App() {
         {projectsError && (
           <div className="mb-4 text-sm text-red-500">{projectsError}</div>
         )}
-        <div className="grid gap-6 md:grid-cols-2">
+        <motion.div
+          className="grid gap-6 md:grid-cols-2"
+          variants={staggerContainer}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true }}
+        >
           {projects.map((p, idx) => (
-            <Card key={(p.title ?? "proj") + idx}>
-              <CardBody>
-                <div className="flex items-start gap-3">
-                  <div className="rounded-xl bg-slate-100 p-2 dark:bg-slate-800">
-                    <Code2 className="size-5" />
-                  </div>
-                  <div>
-                    <h3 className="text-lg font-semibold">{p.title}</h3>
-                    {p.desc && (
-                      <p className="mt-1 text-sm text-slate-600 dark:text-slate-400">{p.desc}</p>
-                    )}
-                    {Array.isArray(p.stack) && p.stack.length > 0 && (
-                      <div className="mt-3 flex flex-wrap gap-2">
-                        {p.stack.map((t) => (
-                          <Chip key={t}>{t}</Chip>
-                        ))}
+            <motion.div key={(p.title ?? "proj") + idx} variants={fadeInUp}>
+              <Card>
+                <CardBody>
+                  <div className="flex items-start gap-3">
+                    <div className="rounded-xl bg-slate-100 p-2 dark:bg-slate-800">
+                      <Code2 className="size-5" />
+                    </div>
+                    <div>
+                      <h3 className="text-lg font-semibold">{p.title}</h3>
+                      {p.desc && (
+                        <p className="mt-1 text-sm text-slate-600 dark:text-slate-400">{p.desc}</p>
+                      )}
+                      {Array.isArray(p.stack) && p.stack.length > 0 && (
+                        <div className="mt-3 flex flex-wrap gap-2">
+                          {p.stack.map((t) => (
+                            <Chip key={t}>{t}</Chip>
+                          ))}
+                        </div>
+                      )}
+                      <div className="mt-4 flex flex-wrap gap-2 text-xs">
+                        {p.link && (
+                          <Button
+                            href={p.link}
+                            target="_blank"
+                            rel="noreferrer"
+                            className="px-3 py-2"
+                          >
+                            <ExternalLink className="size-4" /> LinkedIn
+                          </Button>
+                        )}
+                        {p.repo && (
+                          <Button
+                            href={p.repo}
+                            target="_blank"
+                            rel="noreferrer"
+                            className="px-3 py-2"
+                          >
+                            <Github className="size-4" /> Code
+                          </Button>
+                        )}
+                        {p.demo && (
+                          <Button
+                            href={p.demo}
+                            target="_blank"
+                            rel="noreferrer"
+                            className="px-3 py-2"
+                          >
+                            <ExternalLink className="size-4" /> Live
+                          </Button>
+                        )}
                       </div>
-                    )}
-                    <div className="mt-4 flex flex-wrap gap-2 text-xs">
-                      {p.link && (
-                        <Button
-                          href={p.link}
-                          target="_blank"
-                          rel="noreferrer"
-                          className="px-3 py-2"
-                        >
-                          <ExternalLink className="size-4" /> LinkedIn
-                        </Button>
-                      )}
-                      {p.repo && (
-                        <Button
-                          href={p.repo}
-                          target="_blank"
-                          rel="noreferrer"
-                          className="px-3 py-2"
-                        >
-                          <Github className="size-4" /> Code
-                        </Button>
-                      )}
-                      {p.demo && (
-                        <Button
-                          href={p.demo}
-                          target="_blank"
-                          rel="noreferrer"
-                          className="px-3 py-2"
-                        >
-                          <ExternalLink className="size-4" /> Live
-                        </Button>
-                      )}
                     </div>
                   </div>
-                </div>
-              </CardBody>
-            </Card>
+                </CardBody>
+              </Card>
+            </motion.div>
           ))}
-        </div>
+        </motion.div>
       </Section>
 
       {/* LeetCode */}
