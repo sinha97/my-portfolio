@@ -9,10 +9,8 @@ import {
   Code2,
   ChevronRight,
   Trophy,
-  Star,
   Sun,
   Moon,
-  Laptop,
   Sparkles,
   Briefcase,
   Calendar,
@@ -22,6 +20,8 @@ import {
 import "./App.css";
 import { experiences, highlightProjects, navItems } from "./constant";
 import { Section } from "./components/section";
+import { useTheme } from "./hooks/useTheme";
+import { Badge, Chip, Button, Card, CardBody } from "./components/ui";
 
 function useProjects(jsonUrl) {
   const [projects, setProjects] = useState(highlightProjects);
@@ -55,49 +55,10 @@ function App() {
   const LEETCODE_URL = "https://leetcode.com/u/vk9633698/";
   const LINKEDIN_PROJECTS_JSON = "";
 
+  const { theme, toggleTheme } = useTheme();
+
   const { projects, error: projectsError } = useProjects(
     LINKEDIN_PROJECTS_JSON
-  );
-
-  const Badge = ({ children }) => (
-    <span className="inline-flex items-center rounded-full border border-slate-200 bg-white/90 backdrop-blur px-3 py-1 text-sm leading-6 shadow-sm">
-      {children}
-    </span>
-  );
-
-  const Chip = ({ children }) => (
-    <span className="rounded-full bg-slate-100 px-3 py-1 text-xs font-medium">
-      {children}
-    </span>
-  );
-
-  // Reusable button with subtle lift
-  const Button = ({
-    as: Component = "a",
-    className = "",
-    children,
-    ...props
-  }) => (
-    <Component
-      className={`group relative inline-flex items-center gap-2 rounded-2xl border border-slate-200 bg-white/90 backdrop-blur px-5 py-2.5 text-sm font-semibold shadow-sm transition hover:shadow-md hover:-translate-y-0.5 ${className}`}
-      {...props}
-    >
-      <span className="pointer-events-none absolute inset-0 rounded-2xl opacity-0 transition group-hover:opacity-100 bg-gradient-to-r from-indigo-500/10 via-fuchsia-500/10 to-emerald-500/10" />
-      <span className="relative z-10 flex items-center gap-2">{children}</span>
-    </Component>
-  );
-
-  // Card with soft glass look
-  const Card = ({ children, className = "" }) => (
-    <div
-      className={`rounded-2xl border border-slate-200 bg-white/90 backdrop-blur text-slate-900 shadow transform transition-all duration-300 hover:shadow-xl hover:-translate-y-1 ${className}`}
-    >
-      {children}
-    </div>
-  );
-
-  const CardBody = ({ children, className = "" }) => (
-    <div className={`p-5 md:p-6 ${className}`}>{children}</div>
   );
 
   const skills = useMemo(
@@ -136,25 +97,31 @@ function App() {
   const [open, setOpen] = useState(false);
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-white to-slate-100 text-slate-900 antialiased selection:bg-slate-900 selection:text-white">
+    <div className="min-h-screen bg-gradient-to-b from-white to-slate-100 text-slate-900 antialiased selection:bg-slate-900 selection:text-white dark:from-slate-950 dark:to-slate-900 dark:text-slate-50 dark:selection:bg-indigo-500 dark:selection:text-white transition-colors duration-300">
       {/* Decorative animated blobs */}
       <div className="pointer-events-none absolute inset-0 -z-10 overflow-hidden">
         <motion.div
-          initial={{ opacity: 0, scale: 0.9 }}
-          animate={{ opacity: 0.6, scale: 1 }}
-          transition={{ duration: 1.2 }}
-          className="absolute -top-24 -left-24 h-80 w-80 rounded-full bg-fuchsia-400/30 blur-3xl"
+          animate={{
+            opacity: [0.4, 0.6, 0.4],
+            scale: [1, 1.1, 1],
+            rotate: [0, 45, 0],
+          }}
+          transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
+          className="absolute -top-24 -left-24 h-80 w-80 rounded-full bg-fuchsia-400/30 blur-3xl dark:bg-fuchsia-900/20"
         />
         <motion.div
-          initial={{ opacity: 0, scale: 0.9 }}
-          animate={{ opacity: 0.5, scale: 1 }}
-          transition={{ duration: 1.2, delay: 0.2 }}
-          className="absolute -bottom-24 -right-24 h-96 w-96 rounded-full bg-indigo-400/30 blur-3xl"
+          animate={{
+            opacity: [0.3, 0.5, 0.3],
+            scale: [1, 1.2, 1],
+            rotate: [0, -45, 0],
+          }}
+          transition={{ duration: 15, repeat: Infinity, ease: "easeInOut", delay: 2 }}
+          className="absolute -bottom-24 -right-24 h-96 w-96 rounded-full bg-indigo-400/30 blur-3xl dark:bg-indigo-900/20"
         />
       </div>
 
       {/* Header / Navbar */}
-      <header className="sticky top-0 z-50 backdrop-blur bg-white/60 border-b border-slate-200">
+      <header className="sticky top-0 z-50 backdrop-blur bg-white/60 border-b border-slate-200 dark:bg-slate-950/60 dark:border-slate-800 transition-colors duration-300">
         <div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-3">
           <a href="#home" className="flex items-center gap-3">
             <div className="size-9 md:size-10 rounded-xl bg-gradient-to-br from-indigo-500 to-fuchsia-500" />
@@ -162,7 +129,7 @@ function App() {
               <div className="font-bold text-lg md:text-xl">
                 Vivek Kumar Sinha
               </div>
-              <div className="text-xs text-slate-600 hidden sm:block">
+              <div className="text-xs text-slate-600 dark:text-slate-400 hidden sm:block">
                 Frontend-Heavy Fullstack · React/Next.js · Node/DB
               </div>
             </div>
@@ -174,36 +141,48 @@ function App() {
               <a
                 key={n.id}
                 href={`#${n.id}`}
-                className="rounded-xl px-3 py-2 text-sm font-medium hover:bg-slate-100"
+                className="rounded-xl px-3 py-2 text-sm font-medium hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
               >
                 {n.label}
               </a>
             ))}
+            <button
+              onClick={toggleTheme}
+              className="ml-2 rounded-xl p-2 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors text-slate-600 dark:text-slate-400"
+              aria-label="Toggle theme"
+            >
+              {theme === "light" ? <Moon size={20} /> : <Sun size={20} />}
+            </button>
           </nav>
 
           {/* Mobile actions */}
           <div className="flex md:hidden items-center gap-2">
+            <button
+              onClick={toggleTheme}
+              className="rounded-xl p-2 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors text-slate-600 dark:text-slate-400"
+            >
+              {theme === "light" ? <Moon size={20} /> : <Sun size={20} />}
+            </button>
             <Button
               as="button"
               onClick={() => setOpen((v) => !v)}
               aria-label="Open menu"
             >
               <ChevronRight
-                className={`size-5 transition ${
-                  open ? "rotate-90" : "rotate-0"
-                }`}
+                className={`size-5 transition ${open ? "rotate-90" : "rotate-0"
+                  }`}
               />
             </Button>
           </div>
         </div>
         {open && (
-          <div className="md:hidden border-t border-slate-200">
+          <div className="md:hidden border-t border-slate-200 dark:border-slate-800 bg-white/60 dark:bg-slate-950/60 backdrop-blur">
             <div className="mx-auto max-w-6xl px-4 py-2 grid grid-cols-2 gap-2">
               {navItems.map((n) => (
                 <a
                   key={n.id}
                   href={`#${n.id}`}
-                  className="rounded-xl px-3 py-2 text-sm font-medium hover:bg-slate-100"
+                  className="rounded-xl px-3 py-2 text-sm font-medium hover:bg-slate-100 dark:hover:bg-slate-800/50"
                   onClick={() => setOpen(false)}
                 >
                   {n.label}
@@ -217,7 +196,7 @@ function App() {
       {/* Hero */}
       <section id="home" className="relative overflow-hidden">
         {/* soft radial tint behind hero text — use rgba to avoid parser quirks */}
-        <div className="absolute inset-0 -z-10 bg-[radial-gradient(80%_60%_at_50%_-10%,rgba(99,102,241,0.15),transparent_60%)]" />
+        <div className="absolute inset-0 -z-10 bg-[radial-gradient(80%_60%_at_50%_-10%,rgba(99,102,241,0.15),transparent_60%)] dark:bg-[radial-gradient(80%_60%_at_50%_-10%,rgba(99,102,241,0.1),transparent_60%)]" />
         <div className="mx-auto max-w-6xl px-4">
           <div className="grid items-center gap-10 py-16 md:grid-cols-2 md:py-24">
             <div>
@@ -225,9 +204,9 @@ function App() {
                 <Sparkles className="mr-1 size-4" /> Open to opportunities
               </Badge>
               <h1 className="mt-4 text-4xl md:text-6xl font-extrabold tracking-tight leading-tight">
-                Building delightful web apps & scalable services
+                Building <span className="bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 bg-clip-text text-transparent">delightful web apps</span> & scalable services
               </h1>
-              <p className="mt-4 text-base md:text-lg text-slate-600">
+              <p className="mt-4 text-base md:text-lg text-slate-600 dark:text-slate-400">
                 I’m a frontend-heavy fullstack engineer (5+ years) building
                 across React/Next.js, Node.js, and modern databases. I love
                 crafting clean, accessible interfaces that scale.
@@ -236,7 +215,7 @@ function App() {
                 <Button
                   href="/Vivek_KumarResume.pdf"
                   download
-                  className="bg-gradient-to-r from-indigo-500 to-fuchsia-500 text-white border-0"
+                  className="bg-gradient-to-r from-indigo-500 to-fuchsia-500 text-white border-0 dark:from-indigo-600 dark:to-fuchsia-600"
                 >
                   <Download className="size-4" /> Resume
                 </Button>
@@ -253,22 +232,7 @@ function App() {
                 <Button href={LEETCODE_URL} target="_blank" rel="noreferrer">
                   <Trophy className="size-4" /> LeetCode
                 </Button>
-                {/* Primary CTA */}
-                {/* <Button
-                  href="#contact"
-                  className="bg-gradient-to-r from-indigo-500 to-fuchsia-500 text-white border-0"
-                >
-                  <Mail className="size-4" /> Contact Me
-                </Button> */}
               </div>
-              {/* <div className="mt-6 flex flex-wrap gap-2 text-sm text-slate-600">
-                <Chip>React</Chip>
-                <Chip>Next.js</Chip>
-                <Chip>TypeScript</Chip>
-                <Chip>React Native</Chip>
-                <Chip>Tailwind CSS</Chip>
-                <Chip>Node.js</Chip>
-              </div> */}
             </div>
             {/* Profile card with glass look */}
             <motion.div
@@ -282,8 +246,8 @@ function App() {
                 <div className="flex items-start gap-4">
                   <div className="size-20 md:size-24 rounded-2xl bg-gradient-to-br from-fuchsia-500 to-indigo-500" />
                   <div>
-                    <h3 className="text-xl font-bold">Vivek Kumar Sinha</h3>
-                    <p className="text-slate-600">
+                    <h3 className="text-xl font-bold bg-gradient-to-r from-slate-900 to-slate-700 bg-clip-text text-transparent dark:from-white dark:to-slate-300">Vivek Kumar Sinha</h3>
+                    <p className="text-slate-600 dark:text-slate-400">
                       Frontend-Heavy Fullstack · React/Next.js/RN · Node/DB
                     </p>
                     <div className="mt-2 flex flex-wrap gap-2 text-xs">
@@ -294,15 +258,15 @@ function App() {
                   </div>
                 </div>
                 <div className="mt-6 grid grid-cols-2 gap-3 text-sm">
-                  <div className="rounded-xl border border-slate-200 p-3">
+                  <div className="rounded-xl border border-slate-200 p-3 dark:border-slate-800">
                     <div className="font-semibold">5+ years</div>
-                    <div className="text-slate-600">Experience</div>
+                    <div className="text-slate-600 dark:text-slate-400">Experience</div>
                   </div>
-                  <div className="rounded-xl border border-slate-200 p-3">
+                  <div className="rounded-xl border border-slate-200 p-3 dark:border-slate-800">
                     <div className="font-semibold">
                       React · React-Native · TS · Node · Next.js
                     </div>
-                    <div className="text-slate-600">Core stack</div>
+                    <div className="text-slate-600 dark:text-slate-400">Core stack</div>
                   </div>
                 </div>
               </Card>
@@ -335,7 +299,7 @@ function App() {
             <Card key={idx}>
               <CardBody>
                 <div className="flex items-start gap-3">
-                  <div className="rounded-xl bg-slate-100 p-2">
+                  <div className="rounded-xl bg-slate-100 p-2 dark:bg-slate-800">
                     <Briefcase className="size-5" />
                   </div>
                   <div className="flex-1">
@@ -344,7 +308,7 @@ function App() {
                       <span className="text-slate-500">•</span>
                       <span className="font-medium">{exp.company}</span>
                     </div>
-                    <div className="mt-1 flex flex-wrap items-center gap-4 text-xs text-slate-600">
+                    <div className="mt-1 flex flex-wrap items-center gap-4 text-xs text-slate-600 dark:text-slate-400">
                       {exp.period && (
                         <span className="inline-flex items-center gap-1">
                           <Calendar className="size-4" />
@@ -358,28 +322,6 @@ function App() {
                         </span>
                       )}
                     </div>
-                    {/* {Array.isArray(exp.bullets) && exp.bullets.length > 0 && (
-                      <ul className="mt-3 list-disc pl-5 text-sm text-slate-700 space-y-1">
-                        {exp.bullets.map((b, i) => (
-                          <li key={i}>{b}</li>
-                        ))}
-                      </ul>
-                    )} */}
-                    {/* {exp.links && exp.links.length > 0 && (
-                      <div className="mt-4 flex flex-wrap gap-2 text-xs">
-                        {exp.links.map((l, i) => (
-                          <Button
-                            key={i}
-                            href={l.href}
-                            target="_blank"
-                            rel="noreferrer"
-                            className="px-3 py-2"
-                          >
-                            <ExternalLink className="size-4" /> {l.label}
-                          </Button>
-                        ))}
-                      </div>
-                    )} */}
                   </div>
                 </div>
               </CardBody>
@@ -394,7 +336,7 @@ function App() {
           {skills.map((s) => (
             <div
               key={s}
-              className="rounded-xl border border-slate-200 bg-white/90 backdrop-blur p-3 text-sm font-medium shadow-sm"
+              className="rounded-xl border border-slate-200 bg-white/90 backdrop-blur p-3 text-sm font-medium shadow-sm dark:border-slate-800 dark:bg-slate-900/90 dark:text-slate-200"
             >
               {s}
             </div>
@@ -416,13 +358,13 @@ function App() {
             <Card key={(p.title ?? "proj") + idx}>
               <CardBody>
                 <div className="flex items-start gap-3">
-                  <div className="rounded-xl bg-slate-100 p-2">
+                  <div className="rounded-xl bg-slate-100 p-2 dark:bg-slate-800">
                     <Code2 className="size-5" />
                   </div>
                   <div>
                     <h3 className="text-lg font-semibold">{p.title}</h3>
                     {p.desc && (
-                      <p className="mt-1 text-sm text-slate-600">{p.desc}</p>
+                      <p className="mt-1 text-sm text-slate-600 dark:text-slate-400">{p.desc}</p>
                     )}
                     {Array.isArray(p.stack) && p.stack.length > 0 && (
                       <div className="mt-3 flex flex-wrap gap-2">
@@ -477,7 +419,7 @@ function App() {
           <CardBody>
             <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
               <div>
-                <p className="text-sm text-slate-600">
+                <p className="text-sm text-slate-600 dark:text-slate-400">
                   Visit my LeetCode profile for problems solved, badges, and
                   recent contests.
                 </p>
@@ -492,81 +434,9 @@ function App() {
         </Card>
       </Section>
 
-      {/* Contact */}
-      {/* <Section id="contact" title="Contact" subtitle="Let’s collaborate">
-        <div className="grid gap-6 md:grid-cols-3">
-          <Card>
-            <CardBody>
-              <div className="flex items-start gap-3">
-                <div className="rounded-xl bg-slate-100 p-2">
-                  <Mail className="size-5" />
-                </div>
-                <div>
-                  <div className="font-semibold">Email</div>
-                  <p className="text-sm text-slate-600">Send me an email</p>
-                  <div className="mt-3">
-                    <Button href="mailto:hello.viveksinha97@gmail.com">
-                      Write an email
-                    </Button>
-                  </div>
-                </div>
-              </div>
-            </CardBody>
-          </Card>
-          <Card>
-            <CardBody>
-              <div className="flex items-start gap-3">
-                <div className="rounded-xl bg-slate-100 p-2">
-                  <Linkedin className="size-5" />
-                </div>
-                <div>
-                  <div className="font-semibold">LinkedIn</div>
-                  <p className="text-sm text-slate-600">
-                    Let’s connect and chat about roles.
-                  </p>
-                  <div className="mt-3">
-                    <Button
-                      href={LINKEDIN_URL}
-                      target="_blank"
-                      rel="noreferrer"
-                    >
-                      Open LinkedIn
-                    </Button>
-                  </div>
-                </div>
-              </div>
-            </CardBody>
-          </Card>
-          <Card>
-            <CardBody>
-              <div className="flex items-start gap-3">
-                <div className="rounded-xl bg-slate-100 p-2">
-                  <Github className="size-5" />
-                </div>
-                <div>
-                  <div className="font-semibold">GitHub</div>
-                  <p className="text-sm text-slate-600">
-                    Browse my code and contributions.
-                  </p>
-                  <div className="mt-3">
-                    <Button
-                      href={`https://github.com/${GITHUB_USERNAME}`}
-                      target="_blank"
-                      rel="noreferrer"
-                    >
-                      Visit GitHub
-                    </Button>
-                  </div>
-                </div>
-              </div>
-            </CardBody>
-          </Card>
-        </div>
-      </Section> */}
-
       {/* Footer */}
-      <footer className="border-t border-slate-200">
-        <div className="mx-auto max-w-6xl px-4 py-10 text-sm text-slate-600 flex flex-col md:flex-row items-center justify-between gap-4">
+      <footer className="border-t border-slate-200 dark:border-slate-800 mt-12">
+        <div className="mx-auto max-w-6xl px-4 py-10 text-sm text-slate-600 dark:text-slate-400 flex flex-col md:flex-row items-center justify-between gap-4">
           <div className="flex items-center gap-2">
             <LinkIcon className="size-4" />
             <a
@@ -583,7 +453,7 @@ function App() {
               href={`https://github.com/${GITHUB_USERNAME}`}
               target="_blank"
               rel="noreferrer"
-              className="hover:opacity-80"
+              className="hover:opacity-80 transition-opacity"
             >
               <Github className="size-5" />
             </a>
@@ -591,13 +461,13 @@ function App() {
               href={LINKEDIN_URL}
               target="_blank"
               rel="noreferrer"
-              className="hover:opacity-80"
+              className="hover:opacity-80 transition-opacity"
             >
               <Linkedin className="size-5" />
             </a>
             <a
               href="mailto:hello.viveksinha97@gmail.com"
-              className="hover:opacity-80"
+              className="hover:opacity-80 transition-opacity"
             >
               <Mail className="size-5" />
             </a>
