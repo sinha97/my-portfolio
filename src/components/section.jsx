@@ -8,7 +8,8 @@ export const Section = ({ id, title, subtitle, children }) => {
         <motion.div
           initial="hidden"
           whileInView="visible"
-          viewport={{ once: true, amount: 0.2 }}
+          viewport={{ once: false, amount: 0.2 }} // `once: false` allows the vanish & emerge effect continuously
+
           variants={{
             hidden: { opacity: 0 },
             visible: {
@@ -21,8 +22,8 @@ export const Section = ({ id, title, subtitle, children }) => {
         >
           <motion.h2
             variants={{
-              hidden: { opacity: 0, y: 16 },
-              visible: { opacity: 1, y: 0, transition: { duration: 0.4 } },
+              hidden: { opacity: 0, y: 30, scale: 0.95 },
+              visible: { opacity: 1, y: 0, scale: 1, transition: { duration: 0.6, ease: "easeOut" } },
             }}
             className="text-3xl md:text-4xl font-extrabold tracking-tight"
           >
@@ -31,7 +32,7 @@ export const Section = ({ id, title, subtitle, children }) => {
           {subtitle && (
             <motion.p
               variants={{
-                hidden: { opacity: 0, y: 16 },
+                hidden: { opacity: 0, y: 20 },
                 visible: {
                   opacity: 1,
                   y: 0,
@@ -45,8 +46,8 @@ export const Section = ({ id, title, subtitle, children }) => {
           )}
           <motion.div
             variants={{
-              hidden: { opacity: 0, y: 20 },
-              visible: { opacity: 1, y: 0, transition: { duration: 0.5 } },
+              hidden: { opacity: 0, y: 30 },
+              visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: "easeOut" } },
             }}
             className="mt-8"
           >

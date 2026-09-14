@@ -1,5 +1,5 @@
-import { useEffect, useMemo, useState } from "react";
-import { motion } from "framer-motion";
+import React, { useEffect, useMemo, useState } from "react";
+import { motion, useScroll, useSpring } from "framer-motion";
 import { fadeInUp, staggerContainer, slideInLeft } from "./utils/animations";
 import {
   Github,
@@ -10,19 +10,22 @@ import {
   Code2,
   ChevronRight,
   Trophy,
-  Sun,
-  Moon,
   Sparkles,
   Briefcase,
   Calendar,
   MapPin,
   Download,
+  GraduationCap,
+  FileText,
+  Layers,
+  Cpu,
 } from "lucide-react";
 import "./App.css";
-import { experiences, highlightProjects, navItems } from "./constant";
+import { experiences, highlightProjects, navItems, skillCategories, education } from "./constant";
 import { Section } from "./components/section";
-import { useTheme } from "./hooks/useTheme";
 import { Badge, Chip, Button, Card, CardBody } from "./components/ui";
+import Scene from "./components/canvas/Scene";
+import CustomCursor from "./components/CustomCursor";
 
 function useProjects(jsonUrl) {
   const [projects, setProjects] = useState(highlightProjects);
@@ -56,114 +59,62 @@ function App() {
   const LEETCODE_URL = "https://leetcode.com/u/vk9633698/";
   const LINKEDIN_PROJECTS_JSON = "";
 
-  const { theme, toggleTheme } = useTheme();
-
   const { projects, error: projectsError } = useProjects(
     LINKEDIN_PROJECTS_JSON
   );
 
-  const skills = useMemo(
-    () => [
-      "JavaScript (ES202x)",
-      "TypeScript",
-      "React.js",
-      "React Native",
-      "Redux & Zustand",
-      "Next.js",
-      "Tailwind CSS",
-      "Node.js",
-      "Express",
-      "Context API",
-      "MongoDB",
-      "PostgreSQL",
-      "SQL",
-      "Redux",
-      "Thunk/Saga",
-      "REST & GraphQL",
-      "Webpack/Vite",
-      "Jest/RTL",
-      "CI/CD",
-      "Git & GitHub",
-      "Bootstrap",
-      "Figma",
-      "Agile & Scrum",
-      // "MUI",
-      "Chakra UI",
-      "Storybook",
-      // "AWS Basics",
-    ],
-    []
-  );
-
   const [open, setOpen] = useState(false);
 
+  const { scrollYProgress } = useScroll();
+  const scaleX = useSpring(scrollYProgress, {
+    stiffness: 100,
+    damping: 30,
+    restDelta: 0.001
+  });
+
   return (
-    <div className="min-h-screen bg-gradient-to-b from-white to-slate-100 text-slate-900 antialiased selection:bg-slate-900 selection:text-white dark:from-slate-950 dark:to-slate-900 dark:text-slate-50 dark:selection:bg-indigo-500 dark:selection:text-white transition-colors duration-300">
-      {/* Decorative animated blobs */}
-      <div className="pointer-events-none absolute inset-0 -z-10 overflow-hidden">
-        <motion.div
-          animate={{
-            opacity: [0.4, 0.6, 0.4],
-            scale: [1, 1.1, 1],
-            rotate: [0, 45, 0],
-          }}
-          transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
-          className="absolute -top-24 -left-24 h-80 w-80 rounded-full bg-fuchsia-400/30 blur-3xl dark:bg-fuchsia-900/20"
-        />
-        <motion.div
-          animate={{
-            opacity: [0.3, 0.5, 0.3],
-            scale: [1, 1.2, 1],
-            rotate: [0, -45, 0],
-          }}
-          transition={{ duration: 15, repeat: Infinity, ease: "easeInOut", delay: 2 }}
-          className="absolute -bottom-24 -right-24 h-96 w-96 rounded-full bg-indigo-400/30 blur-3xl dark:bg-indigo-900/20"
-        />
-      </div>
+    <div className="min-h-screen bg-[#020617] text-slate-300 font-mono antialiased selection:bg-cyan-500/30 selection:text-cyan-100 relative">
+      <div className="hud-overlay" />
+      <div className="hud-scanline" />
+      <CustomCursor theme="dark" />
+      <motion.div
+        className="fixed top-0 left-0 right-0 h-1 bg-gradient-to-r from-cyan-400 via-emerald-400 to-amber-400 origin-left z-[100]"
+        style={{ scaleX }}
+      />
+      <Scene />
 
       {/* Header / Navbar */}
-      <header className="sticky top-0 z-50 backdrop-blur bg-white/60 border-b border-slate-200 dark:bg-slate-950/60 dark:border-slate-800 transition-colors duration-300">
+      <header className="sticky top-0 z-50 backdrop-blur-md bg-slate-950/60 border-b border-cyan-500/20 font-mono transition-colors duration-300">
         <div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-3">
-          <a href="#home" className="flex items-center gap-3">
-            <div className="size-9 md:size-10 rounded-xl bg-gradient-to-br from-indigo-500 to-fuchsia-500" />
+          <a href="#home" className="flex items-center gap-3 group">
+            <div className="size-9 md:size-10 rounded-sm border border-cyan-500/50 bg-cyan-950/50 flex items-center justify-center group-hover:bg-cyan-900/50 transition-colors shadow-[0_0_10px_rgba(6,182,212,0.2)]">
+                <Code2 className="size-5 text-cyan-400" />
+            </div>
             <div className="leading-tight">
-              <div className="font-bold text-lg md:text-xl">
-                Vivek Kumar Sinha
+              <div className="font-bold text-lg md:text-xl text-slate-100 tracking-wider">
+                VIVEK KUMAR SINHA
               </div>
-              <div className="text-xs text-slate-600 dark:text-slate-400 hidden sm:block">
-                Frontend-Heavy Fullstack · React/Next.js · Node/DB
+              <div className="text-xs text-emerald-400 hidden sm:block">
+                {">"} SENIOR_FRONTEND_ENGINEER // ACCENTURE
               </div>
             </div>
           </a>
 
           {/* Desktop nav */}
-          <nav className="hidden md:flex items-center gap-2">
+          <nav className="hidden md:flex items-center gap-2 text-cyan-200">
             {navItems.map((n) => (
               <a
                 key={n.id}
                 href={`#${n.id}`}
-                className="rounded-xl px-3 py-2 text-sm font-medium hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
+                className="rounded-sm border border-transparent px-3 py-2 text-sm font-medium hover:border-cyan-500/50 hover:bg-cyan-950/30 transition-all hover:shadow-[0_0_5px_rgba(6,182,212,0.2)]"
               >
-                {n.label}
+                [{n.label.toUpperCase()}]
               </a>
             ))}
-            <button
-              onClick={toggleTheme}
-              className="ml-2 rounded-xl p-2 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors text-slate-600 dark:text-slate-400"
-              aria-label="Toggle theme"
-            >
-              {theme === "light" ? <Moon size={20} /> : <Sun size={20} />}
-            </button>
           </nav>
 
           {/* Mobile actions */}
           <div className="flex md:hidden items-center gap-2">
-            <button
-              onClick={toggleTheme}
-              className="rounded-xl p-2 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors text-slate-600 dark:text-slate-400"
-            >
-              {theme === "light" ? <Moon size={20} /> : <Sun size={20} />}
-            </button>
             <Button
               as="button"
               onClick={() => setOpen((v) => !v)}
@@ -177,16 +128,16 @@ function App() {
           </div>
         </div>
         {open && (
-          <div className="md:hidden border-t border-slate-200 dark:border-slate-800 bg-white/60 dark:bg-slate-950/60 backdrop-blur">
+          <div className="md:hidden border-t border-cyan-500/20 bg-slate-950/90 backdrop-blur-md">
             <div className="mx-auto max-w-6xl px-4 py-2 grid grid-cols-2 gap-2">
               {navItems.map((n) => (
                 <a
                   key={n.id}
                   href={`#${n.id}`}
-                  className="rounded-xl px-3 py-2 text-sm font-medium hover:bg-slate-100 dark:hover:bg-slate-800/50"
+                  className="rounded-sm border border-cyan-500/20 px-3 py-2 text-sm font-medium text-cyan-200 hover:border-cyan-500/80 hover:bg-cyan-950/50"
                   onClick={() => setOpen(false)}
                 >
-                  {n.label}
+                  [{n.label.toUpperCase()}]
                 </a>
               ))}
             </div>
@@ -196,34 +147,53 @@ function App() {
 
       {/* Hero */}
       <section id="home" className="relative overflow-hidden">
-        {/* soft radial tint behind hero text — use rgba to avoid parser quirks */}
-        <div className="absolute inset-0 -z-10 bg-[radial-gradient(80%_60%_at_50%_-10%,rgba(99,102,241,0.15),transparent_60%)] dark:bg-[radial-gradient(80%_60%_at_50%_-10%,rgba(99,102,241,0.1),transparent_60%)]" />
-        <div className="mx-auto max-w-6xl px-4">
+        {/* soft radial tint behind hero text */}
+        <div className="absolute inset-0 -z-10 bg-[radial-gradient(80%_60%_at_50%_-10%,rgba(6,182,212,0.15),transparent_60%)]" />
+        <div className="mx-auto max-w-6xl px-4 relative z-10">
           <div className="grid items-center gap-10 py-16 md:grid-cols-2 md:py-24">
             <div>
               <motion.div initial="hidden" animate="visible" variants={fadeInUp}>
                 <Badge>
-                  <Sparkles className="mr-1 size-4" /> Open to opportunities
+                  <Sparkles className="mr-1 size-4 text-emerald-400" /> STATUS_OPEN_TO_OPPORTUNITIES
                 </Badge>
               </motion.div>
               <motion.h1
                 initial="hidden"
                 animate="visible"
-                variants={fadeInUp}
-                className="mt-4 text-4xl md:text-6xl font-extrabold tracking-tight leading-tight"
+                variants={{
+                  visible: { transition: { staggerChildren: 0.08 } },
+                }}
+                className="mt-4 text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-tight leading-loose flex flex-wrap gap-x-[0.25em] gap-y-2 uppercase"
               >
-                Building <span className="bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 bg-clip-text text-transparent">delightful web apps</span> & scalable services
+                {"Building high-scale web apps & intelligent systems".split(" ").map((word, i) => {
+                  const isHighlight = word === "high-scale" || word === "intelligent" || word === "systems";
+                  return (
+                  <motion.span
+                    key={i}
+                    variants={{
+                      hidden: { opacity: 0, y: 30, scale: 0.9 },
+                      visible: { opacity: 1, y: 0, scale: 1, transition: { duration: 0.6, ease: "easeOut" } },
+                    }}
+                    className={
+                      isHighlight
+                        ? "glitch-text text-cyan-400"
+                        : "text-slate-100"
+                    }
+                    data-text={word}
+                  >
+                    {word}
+                  </motion.span>
+                  );
+                })}
               </motion.h1>
               <motion.p
                 initial="hidden"
                 animate="visible"
                 variants={fadeInUp}
                 transition={{ delay: 0.1 }}
-                className="mt-4 text-base md:text-lg text-slate-600 dark:text-slate-400"
+                className="mt-4 text-base md:text-lg text-slate-400 leading-relaxed"
               >
-                I’m a frontend-heavy fullstack engineer (5+ years) building
-                across React/Next.js, Node.js, and modern databases. I love
-                crafting clean, accessible interfaces that scale.
+                Senior Frontend Engineer (6+ years) at <span className="text-cyan-300 font-semibold">Accenture</span> specializing in enterprise React & Next.js architectures, Module Federation micro-frontends, WCAG 2.1 AA accessibility, and applied AI / RAG systems.
               </motion.p>
               <motion.div
                 initial="hidden"
@@ -233,60 +203,72 @@ function App() {
                 className="mt-6 flex flex-wrap items-center gap-3"
               >
                 <Button
-                  href="/Vivek_KumarResume.pdf"
-                  download
-                  className="bg-gradient-to-r from-indigo-500 to-fuchsia-500 text-white border-0 dark:from-indigo-600 dark:to-fuchsia-600"
+                  href="/Kumar_Vivek_Resume.pdf"
+                  download="Kumar_Vivek_Resume.pdf"
+                  className="bg-emerald-500/20 hover:bg-emerald-500/30 text-emerald-300 border-emerald-500"
                 >
-                  <Download className="size-4" /> Resume
+                  <Download className="size-4" /> DOWNLOAD_RESUME
+                </Button>
+                <Button
+                  href="/Kumar_Vivek_Resume.pdf"
+                  target="_blank"
+                  rel="noreferrer"
+                  className="border-cyan-500/50 hover:border-cyan-400 text-cyan-300 hover:bg-cyan-950/40"
+                >
+                  <FileText className="size-4" /> VIEW_RESUME
                 </Button>
                 <Button
                   href={`https://github.com/${GITHUB_USERNAME}`}
                   target="_blank"
                   rel="noreferrer"
                 >
-                  <Github className="size-4" /> GitHub
+                  <Github className="size-4" /> GITHUB_UPLINK
                 </Button>
                 <Button href={LINKEDIN_URL} target="_blank" rel="noreferrer">
-                  <Linkedin className="size-4" /> LinkedIn
+                  <Linkedin className="size-4" /> LINKEDIN_NODE
                 </Button>
                 <Button href={LEETCODE_URL} target="_blank" rel="noreferrer">
-                  <Trophy className="size-4" /> LeetCode
+                  <Trophy className="size-4" /> LEETCODE
                 </Button>
               </motion.div>
             </div>
-            {/* Profile card with glass look */}
+            {/* Profile card with data grid look */}
             <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, amount: 0.3 }}
+              initial={{ opacity: 0, scale: 0.9 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              viewport={{ once: false, amount: 0.2 }}
               transition={{ duration: 0.5 }}
               className="relative"
             >
-              <Card className="p-6 md:p-8">
+              <Card className="p-6 md:p-8 border-cyan-500/30">
                 <div className="flex items-start gap-4">
-                  <div className="size-20 md:size-24 rounded-2xl bg-gradient-to-br from-fuchsia-500 to-indigo-500" />
+                  <div className="size-20 md:size-24 rounded-sm border-2 border-dashed border-cyan-500/50 bg-cyan-950/30 flex items-center justify-center relative overflow-hidden shrink-0">
+                      <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(6,182,212,0.2)_0%,transparent_70%)]" />
+                      <Code2 className="size-10 text-cyan-400 opacity-80" />
+                  </div>
                   <div>
-                    <h3 className="text-xl font-bold bg-gradient-to-r from-slate-900 to-slate-700 bg-clip-text text-transparent dark:from-white dark:to-slate-300">Vivek Kumar Sinha</h3>
-                    <p className="text-slate-600 dark:text-slate-400">
-                      Frontend-Heavy Fullstack · React/Next.js/RN · Node/DB
+                    <h3 className="text-xl font-bold glitch-text text-cyan-300 uppercase tracking-wide" data-text="VIVEK_KUMAR_SINHA">VIVEK_KUMAR_SINHA</h3>
+                    <p className="text-emerald-400 text-sm mt-1 uppercase">
+                      {">"} SENIOR_FRONTEND_ENGINEER
                     </p>
                     <div className="mt-2 flex flex-wrap gap-2 text-xs">
+                      <Chip>Accenture</Chip>
                       <Chip>India (IST)</Chip>
-                      <Chip>Open Source</Chip>
-                      <Chip>Performance-minded</Chip>
+                      <Chip>WCAG 2.1 AA</Chip>
+                      <Chip>Applied AI / RAG</Chip>
                     </div>
                   </div>
                 </div>
                 <div className="mt-6 grid grid-cols-2 gap-3 text-sm">
-                  <div className="rounded-xl border border-slate-200 p-3 dark:border-slate-800">
-                    <div className="font-semibold">5+ years</div>
-                    <div className="text-slate-600 dark:text-slate-400">Experience</div>
+                  <div className="rounded-sm border border-cyan-500/20 bg-cyan-950/30 p-3">
+                    <div className="font-semibold text-emerald-400 text-base">6+ years</div>
+                    <div className="text-slate-400 text-xs mt-0.5">Professional Experience</div>
                   </div>
-                  <div className="rounded-xl border border-slate-200 p-3 dark:border-slate-800">
-                    <div className="font-semibold">
-                      React · React-Native · TS · Node · Next.js
+                  <div className="rounded-sm border border-cyan-500/20 bg-cyan-950/30 p-3">
+                    <div className="font-semibold text-cyan-300 text-xs leading-snug">
+                      React · Next.js · TS · Micro-Frontends · RAG
                     </div>
-                    <div className="text-slate-600 dark:text-slate-400">Core stack</div>
+                    <div className="text-slate-400 text-xs mt-1">Core Tech Stack</div>
                   </div>
                 </div>
               </Card>
@@ -296,68 +278,90 @@ function App() {
       </section>
 
       {/* About */}
-      <Section id="about" title="About" subtitle="A quick intro">
+      <Section id="about" title="About" subtitle="Engineering profile">
         <motion.div
           initial="hidden"
           whileInView="visible"
-          viewport={{ once: true }}
+          viewport={{ once: false, amount: 0.15 }}
           variants={fadeInUp}
         >
           <Card>
             <CardBody>
-              <p className="text-base leading-relaxed">
-                I’m a core frontend developer with experience shipping consumer
-                apps at scale — from car rental platforms to ecommerce experiences
-                and creator apps. I focus on performance, accessibility, and DX,
-                and I enjoy building design systems that teams love using.
+              <p className="text-base leading-relaxed text-slate-300">
+                I am a <strong className="text-cyan-300">Senior Frontend Engineer</strong> with 6+ years of experience architecting and shipping enterprise-scale web applications, micro-frontends, and high-performance design systems. Currently at <strong className="text-emerald-400">Accenture</strong>, I contribute to Fortune 500 client applications, enforcing strict WCAG 2.1 AA accessibility standards, Module Federation, and end-to-end performance optimizations (Lighthouse 90+, Core Web Vitals).
+              </p>
+              <p className="mt-3 text-base leading-relaxed text-slate-300">
+                Beyond core frontend engineering, I have a deep passion for applied AI architectures — including <strong className="text-cyan-300">Agentic RAG</strong> (LangGraph), <strong className="text-cyan-300">GraphRAG</strong> (Neo4j Cypher), and vector databases (Qdrant, ChromaDB), pairing cutting-edge AI retrieval with production-ready user experiences.
               </p>
             </CardBody>
           </Card>
         </motion.div>
       </Section>
 
+      {/* Experience */}
       <Section
         id="experience"
         title="Experience"
-        subtitle="Work & contributions"
+        subtitle="Career trajectory & technical impact"
       >
         <motion.div
           className="grid gap-6 md:grid-cols-2"
           variants={staggerContainer}
           initial="hidden"
           whileInView="visible"
-          viewport={{ once: true }}
+          viewport={{ once: false, amount: 0.15 }}
         >
           {experiences.map((exp, idx) => (
             <motion.div key={idx} variants={fadeInUp}>
-              <Card>
-                <CardBody>
+              <Card className="h-full flex flex-col justify-between">
+                <CardBody className="flex flex-col h-full">
                   <div className="flex items-start gap-3">
-                    <div className="rounded-xl bg-slate-100 p-2 dark:bg-slate-800">
+                    <div className="rounded-sm bg-cyan-950/50 border border-cyan-500/40 p-2 text-cyan-400 shrink-0">
                       <Briefcase className="size-5" />
                     </div>
                     <div className="flex-1">
                       <div className="flex flex-wrap items-center gap-2">
-                        <h3 className="text-lg font-semibold">{exp.role}</h3>
-                        <span className="text-slate-500">•</span>
-                        <span className="font-medium">{exp.company}</span>
+                        <h3 className="text-lg font-semibold text-slate-100">{exp.role}</h3>
+                        <span className="text-cyan-500">•</span>
+                        <span className="font-medium text-emerald-400">{exp.company}</span>
                       </div>
-                      <div className="mt-1 flex flex-wrap items-center gap-4 text-xs text-slate-600 dark:text-slate-400">
+                      <div className="mt-1 flex flex-wrap items-center gap-4 text-xs text-slate-400">
                         {exp.period && (
                           <span className="inline-flex items-center gap-1">
-                            <Calendar className="size-4" />
+                            <Calendar className="size-3.5 text-cyan-400" />
                             {exp.period}
                           </span>
                         )}
                         {exp.location && (
                           <span className="inline-flex items-center gap-1">
-                            <MapPin className="size-4" />
+                            <MapPin className="size-3.5 text-cyan-400" />
                             {exp.location}
                           </span>
                         )}
                       </div>
                     </div>
                   </div>
+
+                  {/* Bullet highlights */}
+                  {Array.isArray(exp.highlights) && exp.highlights.length > 0 && (
+                    <div className="mt-4 space-y-2 flex-1">
+                      {exp.highlights.map((point, hIdx) => (
+                        <div key={hIdx} className="flex items-start gap-2 text-xs text-slate-300 leading-relaxed">
+                          <span className="text-cyan-400 mt-0.5 select-none font-bold">{">"}</span>
+                          <span>{point}</span>
+                        </div>
+                      ))}
+                    </div>
+                  )}
+
+                  {/* Stack */}
+                  {Array.isArray(exp.stack) && exp.stack.length > 0 && (
+                    <div className="mt-4 flex flex-wrap gap-1.5 pt-3 border-t border-cyan-500/20">
+                      {exp.stack.map((t) => (
+                        <Chip key={t}>{t}</Chip>
+                      ))}
+                    </div>
+                  )}
                 </CardBody>
               </Card>
             </motion.div>
@@ -366,21 +370,36 @@ function App() {
       </Section>
 
       {/* Skills */}
-      <Section id="skills" title="Skills" subtitle="Tools I use daily">
+      <Section id="skills" title="Skills" subtitle="Technical toolkit & specializations">
         <motion.div
-          className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-3"
+          className="grid gap-4 md:grid-cols-2 lg:grid-cols-3"
           variants={staggerContainer}
           initial="hidden"
           whileInView="visible"
-          viewport={{ once: true }}
+          viewport={{ once: false, amount: 0.15 }}
         >
-          {skills.map((s) => (
-            <motion.div
-              key={s}
-              variants={fadeInUp}
-              className="rounded-xl border border-slate-200 bg-white/90 backdrop-blur p-3 text-sm font-medium shadow-sm dark:border-slate-800 dark:bg-slate-900/90 dark:text-slate-200"
-            >
-              {s}
+          {skillCategories.map((group) => (
+            <motion.div key={group.category} variants={fadeInUp}>
+              <Card className="h-full">
+                <CardBody>
+                  <div className="flex items-center gap-2 mb-3 pb-2 border-b border-cyan-500/20">
+                    <Cpu className="size-4 text-cyan-400" />
+                    <h3 className="text-sm font-semibold tracking-wider text-cyan-300 uppercase">
+                      [{group.category}]
+                    </h3>
+                  </div>
+                  <div className="flex flex-wrap gap-2">
+                    {group.items.map((skill) => (
+                      <span
+                        key={skill}
+                        className="rounded-sm border border-cyan-500/20 bg-cyan-950/40 px-2.5 py-1 text-xs text-slate-300 hover:border-cyan-400 hover:text-cyan-200 transition-colors"
+                      >
+                        {skill}
+                      </span>
+                    ))}
+                  </div>
+                </CardBody>
+              </Card>
             </motion.div>
           ))}
         </motion.div>
@@ -390,7 +409,7 @@ function App() {
       <Section
         id="projects"
         title="Projects"
-        subtitle="Case studies from recent work"
+        subtitle="Applied AI systems & featured fullstack builds"
       >
         {projectsError && (
           <div className="mb-4 text-sm text-red-500">{projectsError}</div>
@@ -400,60 +419,63 @@ function App() {
           variants={staggerContainer}
           initial="hidden"
           whileInView="visible"
-          viewport={{ once: true }}
+          viewport={{ once: false, amount: 0.15 }}
         >
           {projects.map((p, idx) => (
             <motion.div key={(p.title ?? "proj") + idx} variants={fadeInUp}>
-              <Card>
-                <CardBody>
+              <Card className="h-full flex flex-col justify-between">
+                <CardBody className="flex flex-col h-full">
                   <div className="flex items-start gap-3">
-                    <div className="rounded-xl bg-slate-100 p-2 dark:bg-slate-800">
+                    <div className="rounded-sm bg-cyan-950/50 border border-cyan-500/40 p-2 text-cyan-400 shrink-0">
                       <Code2 className="size-5" />
                     </div>
-                    <div>
-                      <h3 className="text-lg font-semibold">{p.title}</h3>
+                    <div className="flex-1">
+                      <h3 className="text-lg font-semibold text-slate-100">{p.title}</h3>
                       {p.desc && (
-                        <p className="mt-1 text-sm text-slate-600 dark:text-slate-400">{p.desc}</p>
+                        <p className="mt-2 text-sm text-slate-400 leading-relaxed">{p.desc}</p>
                       )}
-                      {Array.isArray(p.stack) && p.stack.length > 0 && (
-                        <div className="mt-3 flex flex-wrap gap-2">
-                          {p.stack.map((t) => (
-                            <Chip key={t}>{t}</Chip>
-                          ))}
-                        </div>
-                      )}
-                      <div className="mt-4 flex flex-wrap gap-2 text-xs">
-                        {p.link && (
-                          <Button
-                            href={p.link}
-                            target="_blank"
-                            rel="noreferrer"
-                            className="px-3 py-2"
-                          >
-                            <ExternalLink className="size-4" /> LinkedIn
-                          </Button>
-                        )}
-                        {p.repo && (
-                          <Button
-                            href={p.repo}
-                            target="_blank"
-                            rel="noreferrer"
-                            className="px-3 py-2"
-                          >
-                            <Github className="size-4" /> Code
-                          </Button>
-                        )}
-                        {p.demo && (
-                          <Button
-                            href={p.demo}
-                            target="_blank"
-                            rel="noreferrer"
-                            className="px-3 py-2"
-                          >
-                            <ExternalLink className="size-4" /> Live
-                          </Button>
-                        )}
+                    </div>
+                  </div>
+
+                  <div className="mt-4 pt-3 border-t border-cyan-500/10 flex-1 flex flex-col justify-end">
+                    {Array.isArray(p.stack) && p.stack.length > 0 && (
+                      <div className="flex flex-wrap gap-1.5 mb-4">
+                        {p.stack.map((t) => (
+                          <Chip key={t}>{t}</Chip>
+                        ))}
                       </div>
+                    )}
+                    <div className="flex flex-wrap gap-2 text-xs">
+                      {p.link && (
+                        <Button
+                          href={p.link}
+                          target="_blank"
+                          rel="noreferrer"
+                          className="px-3 py-1.5"
+                        >
+                          <ExternalLink className="size-3.5" /> LinkedIn
+                        </Button>
+                      )}
+                      {p.repo && (
+                        <Button
+                          href={p.repo}
+                          target="_blank"
+                          rel="noreferrer"
+                          className="px-3 py-1.5"
+                        >
+                          <Github className="size-3.5" /> Code Uplink
+                        </Button>
+                      )}
+                      {p.demo && (
+                        <Button
+                          href={p.demo}
+                          target="_blank"
+                          rel="noreferrer"
+                          className="px-3 py-1.5 border-emerald-500 text-emerald-400 hover:text-emerald-300"
+                        >
+                          <ExternalLink className="size-3.5" /> Live Demo
+                        </Button>
+                      )}
                     </div>
                   </div>
                 </CardBody>
@@ -463,15 +485,42 @@ function App() {
         </motion.div>
       </Section>
 
+      {/* Education */}
+      <Section id="education" title="Education" subtitle="Academic background">
+        <motion.div
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: false, amount: 0.15 }}
+          variants={fadeInUp}
+        >
+          <Card>
+            <CardBody>
+              <div className="flex items-start gap-4">
+                <div className="rounded-sm bg-cyan-950/50 border border-cyan-500/40 p-3 text-cyan-400 shrink-0">
+                  <GraduationCap className="size-6" />
+                </div>
+                <div>
+                  <h3 className="text-lg font-bold text-slate-100">{education.degree}</h3>
+                  <p className="text-emerald-400 text-sm mt-0.5">{education.institution} • {education.location}</p>
+                  <div className="mt-2 inline-flex items-center gap-1.5 text-xs text-slate-400">
+                    <Calendar className="size-3.5 text-cyan-400" />
+                    <span>{education.period}</span>
+                  </div>
+                </div>
+              </div>
+            </CardBody>
+          </Card>
+        </motion.div>
+      </Section>
+
       {/* LeetCode */}
-      <Section id="leetcode" title="LeetCode" subtitle="DSA practice & streaks">
+      <Section id="leetcode" title="LeetCode" subtitle="Problem solving & algorithmic practice">
         <Card>
           <CardBody>
             <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
               <div>
-                <p className="text-sm text-slate-600 dark:text-slate-400">
-                  Visit my LeetCode profile for problems solved, badges, and
-                  recent contests.
+                <p className="text-sm text-slate-400">
+                  Explore my LeetCode profile for problem solving records, streak consistency, and contest ratings.
                 </p>
               </div>
               <div className="flex flex-wrap gap-3">
@@ -485,12 +534,12 @@ function App() {
       </Section>
 
       {/* Footer */}
-      <footer className="border-t border-slate-200 dark:border-slate-800 mt-12">
-        <div className="mx-auto max-w-6xl px-4 py-10 text-sm text-slate-600 dark:text-slate-400 flex flex-col md:flex-row items-center justify-between gap-4">
+      <footer className="border-t border-cyan-500/20 bg-slate-950/80 mt-12">
+        <div className="mx-auto max-w-6xl px-4 py-10 text-sm text-slate-400 flex flex-col md:flex-row items-center justify-between gap-4">
           <div className="flex items-center gap-2">
-            <LinkIcon className="size-4" />
+            <LinkIcon className="size-4 text-cyan-400" />
             <a
-              className="hover:underline"
+              className="hover:text-cyan-300 transition-colors"
               href={`https://github.com/${GITHUB_USERNAME}`}
               target="_blank"
               rel="noreferrer"
@@ -503,7 +552,8 @@ function App() {
               href={`https://github.com/${GITHUB_USERNAME}`}
               target="_blank"
               rel="noreferrer"
-              className="hover:opacity-80 transition-opacity"
+              className="hover:text-cyan-300 transition-colors"
+              aria-label="GitHub"
             >
               <Github className="size-5" />
             </a>
@@ -511,18 +561,20 @@ function App() {
               href={LINKEDIN_URL}
               target="_blank"
               rel="noreferrer"
-              className="hover:opacity-80 transition-opacity"
+              className="hover:text-cyan-300 transition-colors"
+              aria-label="LinkedIn"
             >
               <Linkedin className="size-5" />
             </a>
             <a
               href="mailto:hello.viveksinha97@gmail.com"
-              className="hover:opacity-80 transition-opacity"
+              className="hover:text-cyan-300 transition-colors"
+              aria-label="Email"
             >
               <Mail className="size-5" />
             </a>
           </div>
-          <p>
+          <p className="text-xs text-slate-500">
             © {new Date().getFullYear()} Vivek Kumar Sinha. All rights reserved.
           </p>
         </div>
