@@ -1,18 +1,18 @@
 export const highlightProjects = [
-  {
-    title: "Enterprise AI Copilot — Multi-Layer RAG",
-    desc: "Production-grade AI copilot built with versioned architecture: v1 Agentic RAG spine (LangGraph, ChromaDB, Tavily, FastAPI), v2 GraphRAG retrieval (Neo4j Cypher), v3 Multilingual retrieval (BGE-M3, Qdrant), v4 Containerized deployment with LangSmith tracing & Next.js frontend.",
-    stack: ["Next.js", "LangGraph", "FastAPI", "Neo4j", "ChromaDB", "Qdrant", "Python", "Docker"],
-    repo: "https://github.com/sinha97",
-    demo: ""
-  },
-  {
-    title: "RAG-Powered Personal Knowledge Base",
-    desc: "Mobile-first capture system (voice transcription, photo OCR, URL clipping) paired with a Next.js web application for high-speed semantic search and RAG-based chat with source citations.",
-    stack: ["React Native", "Next.js", "Vector DB", "Semantic Search", "TypeScript"],
-    repo: "https://github.com/sinha97",
-    demo: ""
-  },
+  // {
+  //   title: "Enterprise AI Copilot — Multi-Layer RAG",
+  //   desc: "Production-grade AI copilot built with versioned architecture: v1 Agentic RAG spine (LangGraph, ChromaDB, Tavily, FastAPI), v2 GraphRAG retrieval (Neo4j Cypher), v3 Multilingual retrieval (BGE-M3, Qdrant), v4 Containerized deployment with LangSmith tracing & Next.js frontend.",
+  //   stack: ["Next.js", "LangGraph", "FastAPI", "Neo4j", "ChromaDB", "Qdrant", "Python", "Docker"],
+  //   repo: "https://github.com/sinha97",
+  //   demo: ""
+  // },
+  // {
+  //   title: "RAG-Powered Personal Knowledge Base",
+  //   desc: "Mobile-first capture system (voice transcription, photo OCR, URL clipping) paired with a Next.js web application for high-speed semantic search and RAG-based chat with source citations.",
+  //   stack: ["React Native", "Next.js", "Vector DB", "Semantic Search", "TypeScript"],
+  //   repo: "https://github.com/sinha97",
+  //   demo: ""
+  // },
   {
     title: "ChatGPT Clone",
     desc: "A fully functional ChatGPT-like interface with authentication, AI streaming responses, and persistent chat history storage.",
